@@ -10709,8 +10709,10 @@ function tryChainSpells(afterSkillId, afterLv) {
 // 在城鎮安全區休息時，HP/SP每秒都會被townRestore()自動補滿：
 // 此時自動施放會消耗HP的技能，或只對治療/場域/戰鬥才有意義的技能，
 // 只會造成「扣了又馬上補回」的無謂消耗與畫面閃爍，故休息時應跳過
+// 有怪物時不視為「城鎮休息」，允許施放
 function wastesResourceInTown(sk, lv) {
   if (!isInTown()) return false;
+  if (state.monsters && state.monsters.length > 0) return false;  // 有怪物時不阻擋
   const hpCostCheck = Array.isArray(sk.hpCost) ? sk.hpCost[lv - 1] : sk.hpCost;
   if (hpCostCheck > 0) return true;
   // #72 鍊金術士：火煙瓶投擲／生物調撥／生命體召喚／氣泡蟲召喚／化學保護都是「掛著讓它跑」的輔助
