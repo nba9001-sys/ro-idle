@@ -9319,7 +9319,7 @@ function castSkillInner(skillId, opts) {
      傷害型技能不受影響（那是打怪，不是「被施魔法」）。 */
   if (state.cardMonSkillImmune && !['damage', 'magic', 'magic_aoe', 'damage_aoe', 'damage_multi',
     'damage_multihit', 'dot', 'poison_proc', 'field_phys_aoe', 'field_magic_aoe', 'field_aoe_magic',
-    'multi_dot_stun', 'special_charge'].includes(sk.type)) {
+    'multi_dot_stun', 'special_charge', 'passive', 'stun_field'].includes(sk.type)) {
     logMsg(`🪲 黃金蟲卡片：無法被施放「${sk.name}」（含增益/治療/狀態）！`);
     return false;
   }
