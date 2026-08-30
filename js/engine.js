@@ -11722,16 +11722,20 @@ function resolveEquipSlotFor(itemId) {
   return slot;
 }
 
-// 檢查攻速藥水是否可用（依道具 reqJob 判斷）
+// 檢查攻速藥水是否可用（依道具 reqJob / reqLevel 判斷）
 function getAspdPotionBlockReason(itemId) {
   const def = ITEMS[itemId];
-  if (!def || !def.reqJob || !def.reqJob.length) return null;
-  const chain = getAllLearnedJobs();
-  if (!chain.some(j => def.reqJob.includes(j))) {
-    return `${currentJob().name}無法使用此藥水（需 ${def.reqJob.join('、')} 系列）。`;
+  if (!def) return '道具不存在';
+  if (def.reqLevel && state.baseLevel < def.reqLevel) return `需要等級 ${def.reqLevel}`;
+  if (def.reqJob && def.reqJob.length) {
+    const chain = getAllLearnedJobs();
+    if (!chain.some(j => def.reqJob.includes(j))) {
+      return `${currentJob().name}無法使用此藥水`;
+    }
   }
   return null;
 }
+function aspdPotionBlockReason(itemId){ return getAspdPotionBlockReason(itemId); }
 
 /* ---------------- 裝備限制 ----------------
    兩道關卡：
