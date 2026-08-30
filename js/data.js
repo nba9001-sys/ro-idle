@@ -23491,7 +23491,7 @@ const CARDS = {
   nightmare_card: { id: 'nightmare_card', monsterId: null, name: '夢魘卡片', icon: '👑', slot: 'headgear', bonus: {"agi":1}, desc: '可避免陷入睡眠的狀態。, AGI+1' },
   baphomet_card: { id: 'baphomet_card', monsterId: 'baphomet_', name: '小巴風特卡片', icon: '🧣', slot: 'garment', bonus: {"agi":3,"critRate":1}, desc: 'AGI+3, CRI+1' },
   evil_druid_card: { id: 'evil_druid_card', monsterId: 'evil_druid', name: '闇神官卡片', icon: '🛡️', slot: 'armor', bonus: {"int":1,"def":1}, desc: '可將鎧甲的屬性轉變為不死屬性。, INT+1, DEF+1' },
-  orc_hero_card: { id: 'orc_hero_card', monsterId: 'ork_hero', name: '獸人英雄卡片', icon: '👑', slot: 'headgear', bonus: {"vit":3}, desc: '可完全避免陷入眩暈的狀態。, VIT+3' },
+  orc_hero_card: { id: 'orc_hero_card', monsterId: 'ork_hero', name: '獸人英雄卡片', icon: '👑', slot: 'headgear', bonus: {"vit":3,"ailResist_stun":100}, desc: '可完全避免陷入眩暈的狀態。, VIT+3' },
   crab_card: { id: 'crab_card', monsterId: 'crab', name: '卡拉蟹卡片', icon: '⚔️', slot: 'weapon', bonus: {"eleDmg_water":30}, desc: '對海星的傷害增加30%，ATK+5, 卡拉蟹、貝殼魔靈、海星卡片全部裝備後，擊殺魚貝類魔物時，有30%的機率會掉落生魚片。, 對水屬性魔物傷害+30%' , "condBonus":[{"when":{"withCards":["aster_card","shellfish_card"]},"bonus":{"eleDmg_water":30},"setName":"魚貝套卡"}]},
   nine_tail_card: { id: 'nine_tail_card', monsterId: 'nine_tail', name: '九尾狐卡片', icon: '🃏', slot: 'garment', bonus: {"agi":2}, desc: 'AGI+2, 精煉9以上時，FLEE+20。' },
   antique_firelock_card: { id: 'antique_firelock_card', monsterId: 'antique_firelock', name: '武士火槍兵卡片', icon: '👢', slot: 'footgear', bonus: {"str":2}, desc: 'STR+2, 精煉9以上時，MAXHP+10%，MAXSP+10%' },
@@ -27268,7 +27268,7 @@ const BASE_EXP_SEGS = [
   [150, 1.01],
   [180, 1.02],
   [200, 1.095],
-  [250, 0.76275],
+  [250, 2.0],
 ];
 function expToNextBaseLevel(level) {
   if (level < 50) return Math.floor(65 * Math.pow(level, 1.39));

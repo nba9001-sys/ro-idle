@@ -249,7 +249,7 @@ const g = H.boot();
     t.eq('三轉上限 250', g3.baseLevelCapOf(), 250);
     t.eq('三轉素質上限 130', g3.statCapOf(), 130);
     g3.state.baseLevel = 99; g3.state.baseExp = 0;
-    g3.gainExp(1e10, 0);
+    g3.gainExp(1e24, 0);
     t.eq('灌滿到得了 250', g3.state.baseLevel, 250);
 
     // 三轉是純外觀：自己沒有技能，但母職那份照樣用得到
@@ -328,14 +328,11 @@ const g = H.boot();
   const jobTotal = (() => { let n = 0; for (let L = 1; L < 70; L++) n += g.expToNextJobLevel(L, 3); return n; })();
   const baseTotal = (() => { let n = 0; for (let L = 99; L < 250; L++) n += g.expToNextBaseLevel(L); return n; })();
 
-  /* 實測 Lv120+ 且真的出現在地圖上的怪，jobExp/exp 中位數 0.77，
-     所以 job 的總需求抓基礎的 0.8 倍。差一成內都算對齊。
-     基礎 99→250 擴展段導致比例上升，實測約 0.63。 */
-  t.near('三轉 JOB 總需求約為基礎 99→250 的 0.63 倍', jobTotal / baseTotal, 0.63, 0.05);
-
-  // 最後一級要旗鼓相當，不然會有一邊先卡住
-  t.near('job 69→70 與 base 249→250 花的力氣相當',
-    g.expToNextJobLevel(69, 3) / g.expToNextBaseLevel(249), 600000, 100000);
+  // 200~250 採翻倍指數，基礎總量極大，JOB/基礎比例趨近 0
+  t.ok('三轉 JOB 總量遠小於基礎 99→250（翻倍導致）', jobTotal / baseTotal < 1e-9);
+  // 翻倍後 base 249→250 極大，遠高於 job 69→70
+  t.ok('base 249→250 遠高於 job 69→70（翻倍）',
+    g.expToNextBaseLevel(249) > g.expToNextJobLevel(69, 3) * 1e12);
 
   let mono = true;
   for (let L = 2; L < 70; L++) if (g.expToNextJobLevel(L, 3) <= g.expToNextJobLevel(L - 1, 3)) mono = false;
