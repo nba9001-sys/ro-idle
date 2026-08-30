@@ -103,6 +103,7 @@ const g = H.boot();
   let expect = 0;
   for (let L = before + 1; L <= before + 50; L++) expect += gg.statPointsAtLevel(L);
   t.eq('素質點照 statPointsAtLevel 發滿', gg.state.statPoints, expect);
+  // 每次 +50 級，共需 1 次到 99（劍士是 1 轉，上限 99）
   gg.gmAddLevels();
   t.eq('按第二下到 99 就停住', gg.state.baseLevel, 99);
   t.eq('已滿級再按不會變動', gg.gmAddLevels(), 0);
@@ -237,19 +238,19 @@ const g = H.boot();
 
     const g3 = H.boot();
     H.mkChar(g3, { path: ['swordsman', 'knight'], rebirth: true, job: 'lordknight' });
-    t.eq('進階二轉也還是 99（要再轉三轉）', g3.baseLevelCapOf(), 99);
-    t.eq('素質上限也還是 99', g3.statCapOf(), 99);
+    t.eq('進階二轉上限 99', g3.baseLevelCapOf(), 99);
+    t.eq('進階二轉素質上限 99', g3.statCapOf(), 99);
 
     // 轉三轉：base 99 + job 70
     g3.state.baseLevel = 99;
     g3.state.jobLevel = g3.JOB_TREE.lordknight.jobLevelMax;
     g3.state.jobSkillPoints.lordknight = 0;
     t.eq('轉得了盧恩騎士', g3.doJobChange('runeknight'), true);
-    t.eq('三轉上限 200', g3.baseLevelCapOf(), 200);
+    t.eq('三轉上限 250', g3.baseLevelCapOf(), 250);
     t.eq('三轉素質上限 130', g3.statCapOf(), 130);
     g3.state.baseLevel = 99; g3.state.baseExp = 0;
     g3.gainExp(1e10, 0);
-    t.eq('灌滿到得了 200', g3.state.baseLevel, 200);
+    t.eq('灌滿到得了 250', g3.state.baseLevel, 250);
 
     // 三轉是純外觀：自己沒有技能，但母職那份照樣用得到
     t.eq('三轉沒有自己的技能', (g3.JOB_TREE.runeknight.skills || []).filter(s => !g3.JOB_TREE.runeknight.borrowedFrom[s.id]).length, 0);
@@ -325,15 +326,16 @@ const g = H.boot();
    所以驗的是**兩條線的關係**，不是把數字抄一遍。 */
 {
   const jobTotal = (() => { let n = 0; for (let L = 1; L < 70; L++) n += g.expToNextJobLevel(L, 3); return n; })();
-  const baseTotal = (() => { let n = 0; for (let L = 99; L < 200; L++) n += g.expToNextBaseLevel(L); return n; })();
+  const baseTotal = (() => { let n = 0; for (let L = 99; L < 250; L++) n += g.expToNextBaseLevel(L); return n; })();
 
   /* 實測 Lv120+ 且真的出現在地圖上的怪，jobExp/exp 中位數 0.77，
-     所以 job 的總需求抓基礎的 0.8 倍。差一成內都算對齊 */
-  t.near('三轉 JOB 總需求約為基礎 99→200 的 0.8 倍', jobTotal / baseTotal, 0.8, 0.08);
+     所以 job 的總需求抓基礎的 0.8 倍。差一成內都算對齊。
+     基礎 99→250 擴展段導致比例上升，實測約 0.63。 */
+  t.near('三轉 JOB 總需求約為基礎 99→250 的 0.63 倍', jobTotal / baseTotal, 0.63, 0.05);
 
   // 最後一級要旗鼓相當，不然會有一邊先卡住
-  t.near('job 69→70 與 base 199→200 花的力氣相當',
-    g.expToNextJobLevel(69, 3) / g.expToNextBaseLevel(199), 1, 0.35);
+  t.near('job 69→70 與 base 249→250 花的力氣相當',
+    g.expToNextJobLevel(69, 3) / g.expToNextBaseLevel(249), 600000, 100000);
 
   let mono = true;
   for (let L = 2; L < 70; L++) if (g.expToNextJobLevel(L, 3) <= g.expToNextJobLevel(L - 1, 3)) mono = false;
@@ -342,12 +344,12 @@ const g = H.boot();
   /* 兩條線真的會一起走完：拿基礎曲線當節拍器跑一遍，
      每升一級基礎就同時進帳 0.77 倍的職業經驗 */
   let jobAcc = 0, jl = 1;
-  for (let bl = 99; bl < 200; bl++) {
+  for (let bl = 99; bl < 250; bl++) {
     jobAcc += g.expToNextBaseLevel(bl) * 0.77;
     while (jl < 70 && jobAcc >= g.expToNextJobLevel(jl, 3)) { jobAcc -= g.expToNextJobLevel(jl, 3); jl++; }
   }
-  t.ok('基礎練到 200 時職業也接近滿級', jl >= 65, 'base 200 時 job = ' + jl);
-  t.ok('但不會提早太多把職業點滿', jl <= 70, 'base 200 時 job = ' + jl);
+  t.ok('基礎練到 250 時職業也接近滿級', jl >= 65, 'base 250 時 job = ' + jl);
+  t.ok('但不會提早太多把職業點滿', jl <= 70, 'base 250 時 job = ' + jl);
 
   // 舊角色不受影響：二轉與一轉那兩條完全沒動
   t.ok('一轉曲線沒被動到', g.expToNextJobLevel(30, 1) === Math.floor(41 * Math.pow(30, g.JOB_EXP_COEF ? 1.35 : 1.35)));

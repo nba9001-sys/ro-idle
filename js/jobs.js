@@ -680,7 +680,7 @@ const JOB_TREE = {
     desc: '站在王座前面的那一個。他不倒，後面就沒事。'
   },
   warlock: {
-    id: 'warlock', name: '魔導士', tier: 3, icon: '🌌', parent: 'highwizard',
+    id: 'warlock', name: '咒術士', tier: 3, icon: '🌌', parent: 'highwizard',
     baseLevelReq: 99, jobLevelReq: 70, jobLevelMax: 70,
     atkMod: 0.5, matkMod: 2.0,
     hpSpFrom: 'highwizard', aspdFrom: 'highwizard',
@@ -692,7 +692,7 @@ const JOB_TREE = {
     desc: '把咒文寫成公式的人。世界照著他的算式崩塌。'
   },
   sorcerer: {
-    id: 'sorcerer', name: '元素使', tier: 3, icon: '🌪️', parent: 'professor',
+    id: 'sorcerer', name: '妖術師', tier: 3, icon: '🌪️', parent: 'professor',
     baseLevelReq: 99, jobLevelReq: 70, jobLevelMax: 70,
     atkMod: 1.0, matkMod: 1.6,
     hpSpFrom: 'professor', aspdFrom: 'professor',

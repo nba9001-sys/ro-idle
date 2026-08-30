@@ -18874,7 +18874,7 @@ const ITEMS = {
   "marvelous_wig": {"id":"marvelous_wig","imgId":5275,"name":"奇怪的假髮","type":"armor","icon":"👑","armorType":"headgear","def":1,"weight":10,"sell":4,"buyPrice":8,"desc":"有著粉色、白色和紫色的假髮 裝備時，移動速度增加 DEF+4 可使用隱匿1級 系列: 頭盔 防禦: 1 位置: 頭上中 重量: 10 裝備: 所有職業","slots":0},
   "fantastic_wig": {"id":"fantastic_wig","imgId":5276,"name":"古怪的假髮","type":"armor","icon":"👑","armorType":"headgear","def":1,"weight":10,"sell":4,"buyPrice":8,"desc":"有著紅色、白色和黑色的假髮 裝備時，移動速度增加 DEF+4 可使用隱匿1級 系列: 頭盔 防禦: 1 位置: 頭上中 重量: 10 裝備: 所有職業","slots":0},
   "yellow_bandana": {"id":"yellow_bandana","imgId":5277,"name":"黃色頭巾","type":"armor","icon":"👑","armorType":"headgear","def":1,"weight":100,"sell":4,"buyPrice":8,"reqLevel":20,"vit":2,"luk":2,"desc":"參加和平遊行時所戴的黃色頭巾，沾著一絲血跡。 LUK+2，VIT+2 受到遠程傷害減少10%。 系列: 頭盔 防禦: 1 位置: 頭上 重量: 100 要求等級: 20 裝備: 除初心者以外的所有職業","slots":0},
-  "chick_hat": {"id":"chick_hat","imgId":5283,"name":"跳躍的小雞","type":"armor","icon":"👑","armorType":"headgear","def":1,"weight":10,"sell":4,"buyPrice":8,"reqLevel":10,"luk":2,"desc":"看似把可愛的小雞放在頭頂上一樣的帽子，蹦蹦跳跳真可愛 受到人型系魔物的傷害減少3%， 受到動物系魔物的傷害減少5%， 不可精煉 可使用二刀連擊 2級，當習得更高等級時會以該等級來啟動 MHP，MSP+50，LUK+2。 系列: 頭盔 防禦: 1 位置: 頭上 重量: 10 要求等級: 10 裝備: 所有職業","slots":0,"sp":50},
+  "chick_hat": {"id":"chick_hat","imgId":5283,"name":"跳躍的小雞","type":"armor","icon":"👑","armorType":"headgear","def":1,"weight":10,"sell":4,"buyPrice":8,"reqLevel":10,"luk":2,"desc":"看似把可愛的小雞放在頭頂上一樣的帽子，蹦蹦跳跳真可愛 受到人型系魔物的傷害減少3%， 受到動物系魔物的傷害減少5%， 不可精煉 可使用二刀連擊 2級，當習得更高等級時會以該等級來啟動 MHP，MSP+50，LUK+2。 系列: 頭盔 防禦: 1 位置: 頭上 重量: 10 要求等級: 10 裝備: 所有職業","slots":0,"sp":50,"raceDmgReduce_demihuman":3,"raceDmgReduce_brute":5,"bonus":{"skill_doubleattack":2}},
   "water_lily_crown": {"id":"water_lily_crown","imgId":5284,"name":"睡蓮王冠 [1]","type":"armor","icon":"👑","armorType":"headgear","weight":20,"sell":20,"buyPrice":40,"reqLevel":30,"agi":1,"dex":1,"desc":"扣在頭上的修練帽子，不知為何能讓心平靜，有著安定的感覺 DEX+1，AGI+1，MDEF+3 HP恢復速度增加5% SP恢復速度增加3% 不可精煉 系列: 頭盔 防禦: 0 位置: 頭上 重量: 20 要求等級: 30 裝備: 所有職業","slots":1,"mdef":3},
   "vane_hairpin": {"id":"vane_hairpin","imgId":5285,"name":"風車頭飾 [1]","type":"armor","icon":"👑","armorType":"headgear","def":4,"weight":30,"sell":16,"buyPrice":32,"reqLevel":30,"agi":2,"desc":"看似風車一樣旋轉的簪，戴上這個可以知道風力? AGI+2 不可精煉 系列: 頭盔 防禦: 4 位置: 頭上 重量: 30 要求等級: 30 裝備: 所有職業","slots":1},
   "pecopeco_hairband": {"id":"pecopeco_hairband","imgId":5286,"name":"七彩大嘴鳥的翅膀","type":"armor","icon":"👑","armorType":"headgear","def":6,"weight":1,"sell":24,"buyPrice":48,"desc":"好像大嘴鳥翅膀貼在身上的感覺的頭盔，可以像大嘴鳥一樣迅速移動 移動速度增加 攻擊速度增加，變動施法時間減少5% 系列: 頭盔 防禦: 6 位置: 頭上 裝備: 所有職業","slots":0},
@@ -27255,23 +27255,20 @@ const AUTO_BUY_QTY = 100;
      · 100→110 用 1.35 的陡比率當**接軌段**，把每級需求從 148 萬拉到 2,976 萬。
        起點只有 Lv99（246,900）的 6 倍，而玩家正好在這裡開打寶模式拿 ×5 經驗
        ——成本 ×6、收入 ×5，接起來幾乎無感，不會有斷層。
-     · 110 之後比率壓到 1.005，再逐段回升到 1.095。中段刻意平，是為了把重量
-       讓給最後十級：190→200 佔 40%（舊的 67.5%）——最後衝刺仍然是重頭戲，
-       但前面九十級不再是白送的。
-
-   校準結果（打寶一般檔、24 小時掛機）：
-     110→18 小時　130→6.7 天　150→17 天　170→30 天　190→53 天　**200→89 天**
-   總量 78.8 億。不開打寶約 15 個月，瘋狂檔（×10）約 1.5 個月。
-
-   改任何一個係數之後，用 tools/measure_exp_100_200.js 重新量、
-   tools/tune_exp_100_200.js 重新對。 */
-const BASE_EXP_L100 = 1550000;             // Lv100→101（Lv99 是 246,900，開打寶 ×5 剛好接得上）
-const BASE_EXP_SEGS = [                    // [到幾級, 每級乘幾]
-  [110, 1.36],                             // 接軌段：十級之內拉到後期的量級
-  [130, 1.005],                            // 中段刻意壓平，把重量讓給最後十級
+/* ---------------- 經驗曲線（基礎等級）----------------
+   等級上限 250。延伸原本 100→200 的分段等比設計，保持相似節奏。
+   1~49：前期較緩
+   50~99：中段加速
+   100~250：分段等比，延長原本 100→200 的設計哲學
+*/
+const BASE_EXP_L100 = 1550000;
+const BASE_EXP_SEGS = [
+  [110, 1.36],
+  [130, 1.005],
   [150, 1.01],
   [180, 1.02],
-  [200, 1.095],                            // 最後衝刺
+  [200, 1.095],
+  [250, 0.76275],
 ];
 function expToNextBaseLevel(level) {
   if (level < 50) return Math.floor(65 * Math.pow(level, 1.39));

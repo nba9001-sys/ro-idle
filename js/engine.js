@@ -7880,8 +7880,8 @@ function onPlayerDown() {
 
    99 之後的每一級都要靠打寶模式才走得動——曲線就是照那個前提配的，
    見 data.js 的 expToNextBaseLevel()。 */
-const BASE_LEVEL_CAP = 99;
-const BASE_LEVEL_CAP_ADVANCED = 200;
+const BASE_LEVEL_CAP = 250;
+const BASE_LEVEL_CAP_ADVANCED = 250;
 const STAT_CAP = 99;
 const STAT_CAP_ADVANCED = 130;
 function isTier3(jobId) {
@@ -7889,7 +7889,10 @@ function isTier3(jobId) {
   return !!(jd && jd.tier >= 3);
 }
 function baseLevelCapOf(jobId) {
-  return isTier3(jobId) ? BASE_LEVEL_CAP_ADVANCED : BASE_LEVEL_CAP;
+  const jd = JOB_TREE[jobId || (state && state.jobId)];
+  const tier = jd?.tier ?? 0;
+  if (tier >= 3) return BASE_LEVEL_CAP_ADVANCED;  // 3轉 250
+  return 99;  // 1轉、2轉、進階二轉都 99
 }
 function statCapOf(jobId) {
   return isTier3(jobId) ? STAT_CAP_ADVANCED : STAT_CAP;
