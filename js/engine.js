@@ -11605,7 +11605,7 @@ function useItem(itemId) {
     }
     // 攻速藥水：不是回復類，直接掛一個 aspd buff。先擋職業/等級限制
     if (def.aspdPct) {
-      const block = aspdPotionBlockReason(itemId);
+      const block = getAspdPotionBlockReason(itemId);
       if (block) { logMsg(`⚠️ ${def.name}：${block}。`); return false; }
       const dur = def.aspdDuration || 1800;
       // 同類型只留一個，避免疊到爆
@@ -11720,6 +11720,17 @@ function resolveEquipSlotFor(itemId) {
     return null;
   }
   return slot;
+}
+
+// 檢查攻速藥水是否可用（依道具 reqJob 判斷）
+function getAspdPotionBlockReason(itemId) {
+  const def = ITEMS[itemId];
+  if (!def || !def.reqJob || !def.reqJob.length) return null;
+  const chain = getAllLearnedJobs();
+  if (!chain.some(j => def.reqJob.includes(j))) {
+    return `${currentJob().name}無法使用此藥水（需 ${def.reqJob.join('、')} 系列）。`;
+  }
+  return null;
 }
 
 /* ---------------- 裝備限制 ----------------

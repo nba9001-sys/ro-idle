@@ -776,7 +776,7 @@ const JOB_TREE = {
     desc: '影子裡的影子。你連他來過都不會知道。'
   },
   shadowchaser: {
-    id: 'shadowchaser', name: '影武者', tier: 3, icon: '🌑', parent: 'stalker',
+    id: 'shadowchaser', name: '魅影追蹤者', tier: 3, icon: '🌑', parent: 'stalker',
     baseLevelReq: 99, jobLevelReq: 70, jobLevelMax: 70,
     atkMod: 1.75, matkMod: 0.7,
     hpSpFrom: 'stalker', aspdFrom: 'stalker',
