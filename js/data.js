@@ -23727,7 +23727,7 @@ const CARDS = {
   doppelganger_card: {"id":"doppelganger_card","monsterId":"doppelganger","name":"死靈卡片","icon":"⚔️","slot":"weapon","bonus":{"aspdPct":10},"desc":"攻擊速度+10%。"},
   osiris_card: {"id":"osiris_card","monsterId":"osiris","name":"俄塞里斯卡片","icon":"💍","slot":"accessory","bonus":{"reviveFullRestore":1},"desc":"復活時，HP與SP全部恢復。"},
   maya_card: {"id":"maya_card","monsterId":"maya","name":"蟻后卡片","icon":"🔰","slot":"shield","bonus":{"magicReflectChance":50},"desc":"以50%機率反射指定1人攻擊魔法。"},
-  pharaoh_card: {"id":"pharaoh_card","monsterId":"pharaoh","name":"法老王卡片","icon":"🎴","slot":"armor","bonus":{"spCostPct":-30},"desc":"使用技能時，SP消耗量減少30%。"},
+  pharaoh_card: {"id":"pharaoh_card","monsterId":"pharaoh","name":"法老王卡片","icon":"🎴","slot":"headgear","bonus":{"spCostPct":-30},"desc":"使用技能時，SP消耗量減少30%。"},
   gargoyle_card: {"id":"gargoyle_card","monsterId":"gargoyle","name":"蝙蝠弓箭手卡片","icon":"💍","slot":"accessory","bonus":{},"desc":"擊殺昆蟲系魔物時，有一定的機率會得到'打雷的箱子'。","killDrop":[{"race":"insect","items":["old_blue_box_f"],"chance":5}]},
   goat_card: {"id":"goat_card","monsterId":"goat","name":"魔羌卡片","icon":"🛡️","slot":"armor","bonus":{},"desc":"精煉5以下時，DEF+2，MDEF+5","condBonus":[{"when":{"refineMax":5},"bonus":{"def":2,"mdef":5}}]},
   galapago_card: {"id":"galapago_card","monsterId":"galapago","name":"啤酒企鵝卡片","icon":"💍","slot":"accessory","bonus":{"itemHeal_carrot_juice":50},"desc":"擊殺昆蟲系魔物時隨機的掉落，蘋果、香蕉、紅蘿蔔汁，每當飲用果汁的時HP恢復量，增加50%。","killDrop":[{"race":"insect","items":["apple","banana","carrot_juice"],"chance":5}]},
