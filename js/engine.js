@@ -8896,6 +8896,13 @@ function levelUpSkill(skillId) {
       paidJob = spendSkillPoint(state.jobId);
     }
   }
+  // 3轉多餘點可點1轉技能：若現職為3轉且該技能為血脈祖先，則從現職池扣點
+  if (!paidJob && (JOB_TREE[state.jobId]?.tier || 0) >= 3) {
+    let cur = JOB_TREE[state.jobId];
+    let isAncestor = false;
+    while (cur) { if (cur.id === skillJobId) { isAncestor = true; break; } cur = JOB_TREE[cur.parent]; }
+    if (isAncestor) paidJob = spendSkillPoint(state.jobId);
+  }
   if (!paidJob) {
     logMsg(`⚠️ ${JOB_TREE[skillJobId].name} 的技能點不足！`);
     return false;
@@ -8941,13 +8948,27 @@ function skillPointPoolJobs(jobId) {
       if (j.tier > 2 && lineage(j.id).includes(jobId) && !out.includes(j.id)) out.push(j.id);
     });
   }
+  // 3轉多餘點可點1轉技能：把整條血脈（含1轉/初心者）也併入
+  if (jd.tier >= 3) {
+    let cur = JOB_TREE[jd.parent];
+    while (cur) { if (!out.includes(cur.id)) out.push(cur.id); cur = JOB_TREE[cur.parent]; }
+  }
   return out;
 }
 
 // 這個職業實際可動用的技能點（含共用池）
 function skillPointsAvailable(jobId) {
   const pts = state.jobSkillPoints || {};
-  return skillPointPoolJobs(jobId).reduce((n, j) => n + (pts[j] || 0), 0);
+  let avail = skillPointPoolJobs(jobId).reduce((n, j) => n + (pts[j] || 0), 0);
+  // 3轉多餘點可點1轉：若查詢的是祖先職業且現職為3轉，回退顯示現職池
+  if (avail === 0 && jobId !== state.jobId && (JOB_TREE[state.jobId]?.tier || 0) >= 3) {
+    let cur = JOB_TREE[state.jobId];
+    while (cur) {
+      if (cur.id === jobId) { avail = skillPointPoolJobs(state.jobId).reduce((n, j) => n + (pts[j] || 0), 0); break; }
+      cur = JOB_TREE[cur.parent];
+    }
+  }
+  return avail;
 }
 
 /* 扣一點，回傳實際扣到哪個職業的池子（扣不到回 null）。
