@@ -377,7 +377,7 @@ function fakeKill(g, id, sec, mode) {
     `雜魚八成 ${Math.round(plain.expGained * 0.8)} → 實得 ${off.expGained}`);
 }
 
-/* ---- 用的是「最近一次」而不是「歷史最快」 ---- */
+/* ---- 用的是「歷史最快」 ---- */
 {
   const { g, list } = bossScene();
   fakeKill(g, list[0], 300);       // 先來一次很快的 → bestMs
@@ -388,8 +388,8 @@ function fakeKill(g, id, sec, mode) {
   const off = g.computeOfflineProgress();
   const byLast = 86400 * (g.MVP_SPAWN_CHANCE_PCT / 100) / list.length / 2400;
   const byBest = 86400 * (g.MVP_SPAWN_CHANCE_PCT / 100) / list.length / 300;
-  t.ok('離線照最近一次算（保守），不是照最佳',
-    Math.abs(off.bossKills - byLast) < Math.abs(off.bossKills - byBest),
+  t.ok('離線照最佳算',
+    Math.abs(off.bossKills - byBest) < Math.abs(off.bossKills - byLast),
     `實得 ${off.bossKills}：照最近約 ${byLast.toFixed(1)}、照最佳約 ${byBest.toFixed(1)}`);
 }
 

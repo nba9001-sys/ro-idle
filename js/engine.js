@@ -13880,9 +13880,10 @@ function computeOfflineProgress(minMs) {
       : [];
     if (bossPool.length) {
       // 殺得動的頭目先過濾出來：擲中了卻沒紀錄的，那一輪時間照樣損失（跟線上抽到打不動的一樣）
+      // 2026-08-31 改為 bestMs（最佳紀錄）避免一次 28 分異常值拖垮離線
       const killable = bossPool.filter(id => {
         const rec = bossKillRecord(id, farmMode());
-        return rec && rec.n > 0 && rec.lastMs >= BOSS_KILL_MIN_MS;
+        return rec && rec.n > 0 && (rec.bestMs || rec.lastMs) >= BOSS_KILL_MIN_MS;
       });
       const rolls = Math.floor(elapsedSec / BOSS_ROLL_SEC);
       for (let i = 0; i < rolls; i++) {
@@ -13892,7 +13893,7 @@ function computeOfflineProgress(minMs) {
         const id = pickFrom[Math.floor(Math.random() * pickFrom.length)];
         if (!killable.includes(id)) continue;   // 抽到殺不動的 → 白耗一輪
         const rec = bossKillRecord(id, farmMode());
-        const killSec = rec.lastMs / 1000;
+        const killSec = (rec.bestMs || rec.lastMs) / 1000;
         const n = BOSS_ROLL_SEC / killSec;      // 這一輪 3 秒能殺幾隻（可為小數）
         if (!(n > 0)) continue;
         const exist = bossGained.find(b => b.id === id);
